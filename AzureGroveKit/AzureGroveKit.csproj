@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{A1E61277-78DD-4ACC-B633-1604C3793F1C}</ProjectGuid>
+    <ProjectGuid>{9B10CCD8-79E2-419B-8409-9EFA04E47A67}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AzureGroveKit</RootNamespace>
@@ -95,10 +95,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GroveMessage.cs" />
+    <Compile Include="IotHubClient.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SensorController.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -127,8 +131,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="GrovePi">
+      <Version>1.0.10</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Azure.Devices">
+      <Version>1.2.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Azure.Devices.Client">
+      <Version>1.2.10</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.2.3</Version>
+      <Version>5.3.3</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

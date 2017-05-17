@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="068f7c7c-d8b5-46fd-bb6c-989583639408"
+    Name="92d472a3-2d5f-461a-82a0-61fb8ccabbc1"
     Publisher="CN=tenwong"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="068f7c7c-d8b5-46fd-bb6c-989583639408" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="92d472a3-2d5f-461a-82a0-61fb8ccabbc1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>AzureGroveKit</DisplayName>
