@@ -8,6 +8,14 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Button x:Name="runbutton" Content="Run" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.522,0.25" Click="runbutton_Click"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Device Connect String:" VerticalAlignment="Top" Width="239"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="10,30,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="314" Height="110"/>
+        <Button x:Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="61,145,0,0" VerticalAlignment="Top" Click="stopButton_Click"/>
+        <TextBlock x:Name="textBlock2" HorizontalAlignment="Left" Margin="349,10,0,0" TextWrapping="Wrap" Text="Send message logs:" VerticalAlignment="Top" Width="239"/>
+        <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="10,197,0,0" TextWrapping="Wrap" Text="Method call logs:" VerticalAlignment="Top" Width="239"/>
+        <ListBox x:Name="methodCallList" HorizontalAlignment="Left" Height="168" Margin="10,222,0,0" VerticalAlignment="Top" BorderThickness="0" Width="314"/>
+        <ListBox x:Name="messageSendList" HorizontalAlignment="Left" Height="355" Margin="349,35,0,0" VerticalAlignment="Top" BorderThickness="0" Width="502"/>
+        <Button x:Name="clearButton" Content="Clear" HorizontalAlignment="Left" Margin="117,145,0,0" VerticalAlignment="Top" Click="clearButton_Click"/>
     </Grid>
 </Page>
