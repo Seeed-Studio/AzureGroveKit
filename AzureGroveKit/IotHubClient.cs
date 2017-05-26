@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.Devices.Client;
+﻿#define SIMULATE
+using Microsoft.Azure.Devices.Client;
+using Microsoft.Devices.Tpm;
+using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -12,17 +15,11 @@ namespace AzureGroveKit
         private string deviceConnectionString;
 
         Action<object> callMeLogger;
-        //Action<object> getDeviceNameLogger;
         Action<object> errorHandler;
 
-        public IotHubClient(String deviceConnectionString, Action<object> callMeLogger, Action<object> errorHandler)
+        public IotHubClient(Action<object> callMeLogger, Action<object> errorHandler)
         {
-            //if (String.IsNullOrEmpty(deviceConnectionString))
-            //    this.deviceConnectionString = ConnectionStringProvider.Value;
-            //else
-            this.deviceConnectionString = deviceConnectionString;
             this.callMeLogger = callMeLogger;
-            //this.getDeviceNameLogger = getDeviceNameLogger;
             this.errorHandler = errorHandler;
         }
 
@@ -30,8 +27,16 @@ namespace AzureGroveKit
         {
             try
             {
-                this.deviceClient = DeviceClient.CreateFromConnectionString(this.deviceConnectionString, TransportType.Mqtt);
-
+#if SIMULATE
+                this.deviceClient = DeviceClient.CreateFromConnectionString(ConnectionStringProvider.Value, TransportType.Mqtt);
+#else
+                TpmDevice myDevice = new TpmDevice(0); 
+                string hubUri = myDevice.GetHostName();
+                string deviceId = myDevice.GetDeviceId();
+                string sasToken = myDevice.GetSASToken();
+                this.deviceClient = DeviceClient.Create(hubUri,
+                    AuthenticationMethodFactory.CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Mqtt);
+#endif
                 await this.deviceClient.OpenAsync();
 
                 // Set up callbacks:
@@ -66,10 +71,9 @@ namespace AzureGroveKit
         private Task<MethodResponse> DisplayLCD(MethodRequest methodRequest, object userContext)
         {
             Debug.WriteLine("\t{0}", methodRequest.DataAsJson);
-            //IRgbLcdDisplay display = DeviceFactory.Build.RgbLcdDisplay();
-            //display.SetText("Hello from Dexter Industries!").SetBacklightRgb(255, 50, 255);
-
-            SensorController.DisplayLCD(methodRequest.DataAsJson);
+            SensorController sensorController = new SensorController();
+            MethodData m = JsonConvert.DeserializeObject<MethodData>(methodRequest.DataAsJson);
+            sensorController.DisplayLCD(m.Msg);
             this.callMeLogger(methodRequest.DataAsJson);
             return Task.FromResult(new MethodResponse(new byte[0], 200));
         }
@@ -81,4 +85,11 @@ namespace AzureGroveKit
             return Task.FromResult(new MethodResponse(new byte[0], 200));
         }
     }
+
+    class MethodData
+    {
+        public String Msg { get; set; }
+    }
+
+
 }

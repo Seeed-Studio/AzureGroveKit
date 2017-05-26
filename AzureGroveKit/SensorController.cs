@@ -1,40 +1,96 @@
-﻿using Microsoft.Azure.Devices.Client;
+﻿#define SIMULATE
+using Microsoft.Azure.Devices.Client;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-//using GrovePi;
-//using GrovePi.I2CDevices;
+#if SIMULATE
+#else
+using GrovePi;
+using GrovePi.I2CDevices;
+using GrovePi.Sensors;
+#endif
 
 namespace AzureGroveKit
 {
     class SensorController
     {
-        public static GroveMessage GetSensorData()
+#if SIMULATE
+        public GroveMessage GetSensorValue()
         {
             GroveMessage message = new GroveMessage();
-            Random rd = new Random();
-            message.Temp = rd.Next().ToString();
-            message.Hum = rd.Next().ToString();
-            message.Sound = rd.Next().ToString();
-            message.Light = rd.Next().ToString();
-            message.GasSO = rd.Next().ToString();
+            message.Temp = "25";
+            message.Hum = "69";
+            message.Sound = "23";
+            message.Light = "112";
+            message.GasSO = "23";
+            message.PIR = "True";
             message.Timestamp = DateTime.Now.ToString();
 
             return message;
         }
 
-        public static void DisplayLCD(String msg)
+        public void DisplayLCD(String msg)
         {
-            Debug.WriteLine("\t{0}", msg);
-            //IRgbLcdDisplay display = DeviceFactory.Build.RgbLcdDisplay();
-            //display.SetText("Hello from Dexter Industries!").SetBacklightRgb(255, 50, 255);
+            Debug.WriteLine("Display: " + msg);
         }
 
-        public static Task<MethodResponse> TurnOnMotoDriver(MethodRequest methodRequest, object userContext)
+        public void TurnOnMotoDriver(Boolean onoff)
         {
-            Debug.WriteLine("\t{0}", methodRequest.DataAsJson);
-
-            return Task.FromResult(new MethodResponse(new byte[0], 200));
+            Debug.WriteLine("\t turn " + onoff);
         }
+#else
+
+        IDHTTemperatureAndHumiditySensor temphumiSensor;
+        ISoundSensor soundSensor;
+        ILightSensor lightSensor;
+        IGasSensorMQ2 gasSensor;
+        IPIRMotionSensor pirMotion;
+        IRgbLcdDisplay display;
+
+        public SensorController() {
+            temphumiSensor = DeviceFactory.Build.DHTTemperatureAndHumiditySensor(Pin.DigitalPin2, DHTModel.Dht11);
+            soundSensor = DeviceFactory.Build.SoundSensor(Pin.AnalogPin0);
+            lightSensor = DeviceFactory.Build.LightSensor(Pin.AnalogPin1);
+            gasSensor = DeviceFactory.Build.GasSensorMQ2(Pin.AnalogPin2);
+            pirMotion = DeviceFactory.Build.PIRMotionSensor(Pin.DigitalPin3);
+            display = DeviceFactory.Build.RgbLcdDisplay();
+        }
+
+        public GroveMessage GetSensorValue()
+        {
+            GroveMessage message = new GroveMessage();
+
+            try
+            {
+                temphumiSensor.Measure();
+                message.Temp = temphumiSensor.TemperatureInCelsius.ToString();
+                message.Hum = temphumiSensor.Humidity.ToString();
+                message.Sound = soundSensor.SensorValue().ToString();
+                message.Light = lightSensor.SensorValue().ToString();
+                message.GasSO = gasSensor.SensorValue().ToString();
+                message.PIR = pirMotion.IsPeopleDetected().ToString();
+                message.Timestamp = DateTime.Now.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return message;
+        }
+
+
+        public void DisplayLCD(String msg)
+        {
+            display.SetText(msg).SetBacklightRgb(255, 50, 255);
+        }
+
+        public void TurnOnMotoDriver(Boolean onoff)
+        {
+            Debug.WriteLine("\t turn {0}", onoff);
+        }
+#endif
     }
+
 }

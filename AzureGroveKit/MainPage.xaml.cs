@@ -20,43 +20,27 @@ namespace AzureGroveKit
     {
         CancellationTokenSource ctsForStart;
         IotHubClient iotClient;
+        SensorController sensorController;
         int callMeCounter;
         int sendMessageCounter;
 
         public MainPage()
         {
             this.InitializeComponent();
-            textBox.Text = ConnectionStringProvider.Value;
+            //textBox.Text = ConnectionStringProvider.Value;
             callMeCounter = 0;
             sendMessageCounter = 0;
+            sensorController = new SensorController();
         }
 
         private async void runbutton_Click(object sender, RoutedEventArgs e)
         {
             ctsForStart = new CancellationTokenSource();
             String deviceConnectionString = textBox.Text;
-            //String iotHubUri = String.Empty;
             runbutton.IsEnabled = false;
-
-
-            iotClient = new IotHubClient(deviceConnectionString, CallMeLogger, null);
+            iotClient = new IotHubClient(CallMeLogger, null);
             await iotClient.Start();
-
-
-            //var task1 = sendMessageAsync(iotHubUri, iotHubConnectString, 1000);
-            //var task2 = recieiveMessageAsync(iotHubUri, iotHubConnectString);
-            //try
-            //{
-            //    await Task.WhenAll(task1, task2);
-            //    //await Task.WhenAll(task2);
-            //} catch (Exception ex)
-            //{
-            //    Debug.WriteLine("await WhenAll..." + ex);
-            //}
             await sendMessageAsync(3000);
-            //await recieiveMessageAsync(iotHubUri, iotHubConnectString);
-
-
         }
 
         private void clearButton_Click(object sender, RoutedEventArgs e)
@@ -75,7 +59,7 @@ namespace AzureGroveKit
                 {
                     return;
                 }
-                GroveMessage groveMessage = SensorController.GetSensorData();
+                GroveMessage groveMessage = sensorController.GetSensorValue();
                 var messageSerialized = JsonConvert.SerializeObject(groveMessage);
                 var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
                 await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
@@ -136,5 +120,6 @@ namespace AzureGroveKit
             runbutton.IsEnabled = true;
             await iotClient.CloseAsync();
         }
+
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AzureGroveKit
+﻿namespace AzureGroveKit
 {
     class GroveMessage
     {
@@ -13,6 +7,7 @@ namespace AzureGroveKit
         public string Sound { get; set; }
         public string Light { get; set; }
         public string GasSO { get; set; }
+        public string PIR { get; set; }
         public string Timestamp { get; set; }
     }
 }
