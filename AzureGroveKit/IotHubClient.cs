@@ -39,7 +39,6 @@ namespace AzureGroveKit
 #endif
                 await this.deviceClient.OpenAsync();
 
-                // Set up callbacks:
                 await deviceClient.SetMethodHandlerAsync("DisplayLCD", DisplayLCD, null);
                 await deviceClient.SetMethodHandlerAsync("TurnOnMotoDriver", ControlMotoDriver, null);
 

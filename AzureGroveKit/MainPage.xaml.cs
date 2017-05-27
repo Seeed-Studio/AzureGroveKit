@@ -27,7 +27,6 @@ namespace AzureGroveKit
         public MainPage()
         {
             this.InitializeComponent();
-            //textBox.Text = ConnectionStringProvider.Value;
             callMeCounter = 0;
             sendMessageCounter = 0;
             sensorController = new SensorController();
@@ -36,7 +35,6 @@ namespace AzureGroveKit
         private async void runbutton_Click(object sender, RoutedEventArgs e)
         {
             ctsForStart = new CancellationTokenSource();
-            String deviceConnectionString = textBox.Text;
             runbutton.IsEnabled = false;
             iotClient = new IotHubClient(CallMeLogger, null);
             await iotClient.Start();
@@ -62,7 +60,7 @@ namespace AzureGroveKit
                 GroveMessage groveMessage = sensorController.GetSensorValue();
                 var messageSerialized = JsonConvert.SerializeObject(groveMessage);
                 var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
-                await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
+                //await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
                 SendMessageLoger(messageSerialized);
                 await Task.Delay(delayTime);
             }
