@@ -1,4 +1,4 @@
-﻿#define SIMULATE
+﻿//#define SIMULATE
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Devices.Tpm;
 using Newtonsoft.Json;
@@ -12,8 +12,6 @@ namespace AzureGroveKit
     class IotHubClient
     {
         public DeviceClient deviceClient;
-        private string deviceConnectionString;
-
         Action<object> callMeLogger;
         Action<object> errorHandler;
 

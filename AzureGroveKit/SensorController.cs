@@ -1,4 +1,4 @@
-﻿#define SIMULATE
+﻿//#define SIMULATE
 using Microsoft.Azure.Devices.Client;
 using System;
 using System.Diagnostics;
