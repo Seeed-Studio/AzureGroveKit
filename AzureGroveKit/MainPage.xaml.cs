@@ -60,7 +60,7 @@ namespace AzureGroveKit
                 GroveMessage groveMessage = sensorController.GetSensorValue();
                 var messageSerialized = JsonConvert.SerializeObject(groveMessage);
                 var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
-                //await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
+                await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
                 SendMessageLoger(messageSerialized);
                 await Task.Delay(delayTime);
             }

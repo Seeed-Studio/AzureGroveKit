@@ -14,11 +14,13 @@ namespace AzureGroveKit
         public DeviceClient deviceClient;
         Action<object> callMeLogger;
         Action<object> errorHandler;
+        SensorController sensorController;
 
         public IotHubClient(Action<object> callMeLogger, Action<object> errorHandler)
         {
             this.callMeLogger = callMeLogger;
             this.errorHandler = errorHandler;
+            sensorController = new SensorController();
         }
 
         public async Task Start()
@@ -38,7 +40,7 @@ namespace AzureGroveKit
                 await this.deviceClient.OpenAsync();
 
                 await deviceClient.SetMethodHandlerAsync("DisplayLCD", DisplayLCD, null);
-                await deviceClient.SetMethodHandlerAsync("TurnOnMotoDriver", ControlMotoDriver, null);
+                await deviceClient.SetMethodHandlerAsync("ControlMotor", ControlMotoDriver, null);
 
                 Debug.WriteLine("Exited!\n");
             }
@@ -68,9 +70,8 @@ namespace AzureGroveKit
         private Task<MethodResponse> DisplayLCD(MethodRequest methodRequest, object userContext)
         {
             Debug.WriteLine("\t{0}", methodRequest.DataAsJson);
-            SensorController sensorController = new SensorController();
             MethodData m = JsonConvert.DeserializeObject<MethodData>(methodRequest.DataAsJson);
-            sensorController.DisplayLCD(m.Msg);
+            sensorController.DisplayLCD(m.text);
             this.callMeLogger(methodRequest.DataAsJson);
             return Task.FromResult(new MethodResponse(new byte[0], 200));
         }
@@ -78,15 +79,21 @@ namespace AzureGroveKit
         private Task<MethodResponse> ControlMotoDriver(MethodRequest methodRequest, object userContext)
         {
             Debug.WriteLine("\t{0}", methodRequest.DataAsJson);
-
+            MotorMethodData m = JsonConvert.DeserializeObject<MotorMethodData>(methodRequest.DataAsJson);
+            sensorController.ControlMotoDriver(m.onoff);
+            this.callMeLogger(methodRequest.DataAsJson);
             return Task.FromResult(new MethodResponse(new byte[0], 200));
         }
     }
 
     class MethodData
     {
-        public String Msg { get; set; }
+        public String text { get; set; }
     }
 
+    class MotorMethodData
+    {
+        public Boolean onoff { get; set; }
+    }
 
 }

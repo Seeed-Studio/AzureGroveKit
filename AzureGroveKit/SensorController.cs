@@ -46,6 +46,7 @@ namespace AzureGroveKit
         IGasSensorMQ2 gasSensor;
         IPIRMotionSensor pirMotion;
         IRgbLcdDisplay display;
+        IMiniMotorDriver motor;
 
         public SensorController() {
             temphumiSensor = DeviceFactory.Build.DHTTemperatureAndHumiditySensor(Pin.DigitalPin2, DHTModel.Dht11);
@@ -54,6 +55,8 @@ namespace AzureGroveKit
             gasSensor = DeviceFactory.Build.GasSensorMQ2(Pin.AnalogPin2);
             pirMotion = DeviceFactory.Build.PIRMotionSensor(Pin.DigitalPin3);
             display = DeviceFactory.Build.RgbLcdDisplay();
+            // Mini Motor Driver refer to: http://wiki.seeed.cc/Grove-Mini_I2C_Motor_Driver_v1.0/#change-default-i2c-address
+            motor = DeviceFactory.Build.MiniMotorDriver(0xD0, 0xC0);
         }
 
         public GroveMessage GetSensorValue()
@@ -86,9 +89,17 @@ namespace AzureGroveKit
             display.SetText(msg).SetBacklightRgb(255, 50, 255);
         }
 
-        public void TurnOnMotoDriver(Boolean onoff)
+        public void ControlMotoDriver(Boolean onoff)
         {
-            Debug.WriteLine("\t turn {0}", onoff);
+            if (onoff)
+            {
+                motor.drive1(100);
+                motor.drive2(100);
+            } else
+            {
+                motor.drive1(0);
+                motor.drive2(0);
+            }
         }
 #endif
     }
