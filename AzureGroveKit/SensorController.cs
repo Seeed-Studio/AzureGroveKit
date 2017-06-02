@@ -1,4 +1,4 @@
-﻿//#define SIMULATE
+﻿#define SIMULATE
 using Microsoft.Azure.Devices.Client;
 using System;
 using System.Diagnostics;
@@ -22,7 +22,7 @@ namespace AzureGroveKit
             message.Hum = "69";
             message.Sound = "23";
             message.Light = "112";
-            message.GasSO = "23";
+            message.GasSO = 23;
             message.PIR = "True";
             message.Timestamp = DateTime.Now.ToString();
 
@@ -34,7 +34,7 @@ namespace AzureGroveKit
             Debug.WriteLine("Display: " + msg);
         }
 
-        public void TurnOnMotoDriver(Boolean onoff)
+        public void ControlMotoDriver(Boolean onoff)
         {
             Debug.WriteLine("\t turn " + onoff);
         }

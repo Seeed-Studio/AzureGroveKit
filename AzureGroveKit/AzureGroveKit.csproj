@@ -144,12 +144,6 @@
       <Version>5.3.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\GrovePi\Software\CSharp\GrovePi\GrovePi.csproj">
-      <Project>{a667742a-b887-4b46-8ec1-c671e8bec5e4}</Project>
-      <Name>GrovePi</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -1,4 +1,4 @@
-﻿//#define SIMULATE
+﻿#define SIMULATE
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Devices.Tpm;
 using Newtonsoft.Json;
@@ -39,8 +39,8 @@ namespace AzureGroveKit
 #endif
                 await this.deviceClient.OpenAsync();
 
-                await deviceClient.SetMethodHandlerAsync("DisplayLCD", DisplayLCD, null);
-                await deviceClient.SetMethodHandlerAsync("ControlMotor", ControlMotoDriver, null);
+                //await deviceClient.SetMethodHandlerAsync("DisplayLCD", DisplayLCD, null);
+                //await deviceClient.SetMethodHandlerAsync("ControlMotor", ControlMotoDriver, null);
 
                 Debug.WriteLine("Exited!\n");
             }
@@ -79,10 +79,11 @@ namespace AzureGroveKit
         private Task<MethodResponse> ControlMotoDriver(MethodRequest methodRequest, object userContext)
         {
             Debug.WriteLine("\t{0}", methodRequest.DataAsJson);
-            MotorMethodData m = JsonConvert.DeserializeObject<MotorMethodData>(methodRequest.DataAsJson);
-            sensorController.ControlMotoDriver(m.onoff);
-            this.callMeLogger(methodRequest.DataAsJson);
-            return Task.FromResult(new MethodResponse(new byte[0], 200));
+            //MotorMethodData m = JsonConvert.DeserializeObject<MotorMethodData>(methodRequest.DataAsJson);
+            //sensorController.ControlMotoDriver(m.onoff);
+            //this.callMeLogger(methodRequest.DataAsJson);
+            //return Task.FromResult(new MethodResponse(new byte[0], 200));
+            return Task.FromResult(new MethodResponse(200));
         }
     }
 

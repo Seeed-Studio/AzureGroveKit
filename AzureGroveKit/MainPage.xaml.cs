@@ -38,7 +38,7 @@ namespace AzureGroveKit
             runbutton.IsEnabled = false;
             iotClient = new IotHubClient(CallMeLogger, null);
             await iotClient.Start();
-            await sendMessageAsync(3000);
+            //await sendMessageAsync(3000);
         }
 
         private void clearButton_Click(object sender, RoutedEventArgs e)
