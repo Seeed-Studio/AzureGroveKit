@@ -1,16 +1,15 @@
-using System;
 using Newtonsoft.Json;
+using System;
 using Microsoft.Azure.Devices;
-using System.Text;
 
-const String IOTHUB_CONNECT_STRING = "HostName=GroveKitIotHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=szPdDDGjl5cxPbkJhuqty16K7PiQtDt3ON2Xi7Pfofk=";
-const Int32 DANGER_VALUE = 100;
+const string IOTHUB_CONNECT_STRING = "HostName=GroveKitIotHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=szPdDDGjl5cxPbkJhuqty16K7PiQtDt3ON2Xi7Pfofk=";
+const int DANGER_VALUE = 100;
 
 public static void Run(string myEventHubMessage, TraceWriter log)
 {
     log.Info($"C# Event Hub trigger function processed a message: {myEventHubMessage}");
     GroveMessage m = JsonConvert.DeserializeObject<GroveMessage>(myEventHubMessage);
-    if (m.GasSO > DANGER_VALUE) {
+    if (m.GasSO < DANGER_VALUE) {
         ControlMotor("GroveKitDevice", true).Wait();
     } else {
         ControlMotor("GroveKitDevice", false).Wait();
@@ -27,7 +26,7 @@ public static async Task ControlMotor(String deviceId, Boolean onoff)
     var response = await serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
 }
 
-class GroveMessage
+private class GroveMessage
 {
     public string Hum { get; set; }
     public string Temp { get; set; }

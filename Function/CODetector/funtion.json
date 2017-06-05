@@ -1,0 +1,14 @@
+{
+  "bindings": [
+    {
+      "type": "eventHubTrigger",
+      "name": "myEventHubMessage",
+      "direction": "in",
+      "path": "YOUR_IOTHUB_EVENTHUB_COMPATIBLE_NAME",
+      "connection": "GroveKitIoTHubEventHubCompatibleEndpoint",
+      "consumerGroup": "function",
+      "cardinality": "many"
+    }
+  ],
+  "disabled": false
+}
