@@ -1,4 +1,4 @@
-﻿#define SIMULATE
+﻿//#define SIMULATE
 using Microsoft.Azure.Devices.Client;
 using System;
 using System.Diagnostics;
@@ -45,7 +45,7 @@ namespace AzureGroveKit
         ILightSensor lightSensor;
         IGasSensorMQ2 gasSensor;
         IPIRMotionSensor pirMotion;
-        IRgbLcdDisplay display;
+        IOLEDDisplay128X64 display;
         IMiniMotorDriver motor;
 
         public SensorController() {
@@ -54,9 +54,8 @@ namespace AzureGroveKit
             lightSensor = DeviceFactory.Build.LightSensor(Pin.AnalogPin1);
             gasSensor = DeviceFactory.Build.GasSensorMQ2(Pin.AnalogPin2);
             pirMotion = DeviceFactory.Build.PIRMotionSensor(Pin.DigitalPin3);
-            display = DeviceFactory.Build.RgbLcdDisplay();
-            // Mini Motor Driver refer to: http://wiki.seeed.cc/Grove-Mini_I2C_Motor_Driver_v1.0/#change-default-i2c-address
-            motor = DeviceFactory.Build.MiniMotorDriver(0xD0, 0xC0);
+            display = DeviceFactory.Build.OLEDDisplay128X64();
+            motor = DeviceFactory.Build.MiniMotorDriver();
         }
 
         public GroveMessage GetSensorValue()
@@ -70,7 +69,7 @@ namespace AzureGroveKit
                 message.Hum = temphumiSensor.Humidity.ToString();
                 message.Sound = soundSensor.SensorValue().ToString();
                 message.Light = lightSensor.SensorValue().ToString();
-                message.GasSO = gasSensor.SensorValue().ToString();
+                message.GasSO = gasSensor.SensorValue();
                 message.PIR = pirMotion.IsPeopleDetected().ToString();
                 message.Timestamp = DateTime.Now.ToString();
 
@@ -86,7 +85,12 @@ namespace AzureGroveKit
 
         public void DisplayLCD(String msg)
         {
-            display.SetText(msg).SetBacklightRgb(255, 50, 255);
+            display.init();  
+            display.clearDisplay();
+            display.setNormalDisplay();
+            display.setPageMode();
+            display.setTextXY(0, 0);
+            display.putString(msg);
         }
 
         public void ControlMotoDriver(Boolean onoff)
