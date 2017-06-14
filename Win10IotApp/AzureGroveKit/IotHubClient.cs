@@ -25,29 +25,22 @@ namespace AzureGroveKit
 
         public async Task Start()
         {
-            try
-            {
 #if SIMULATE
-                this.deviceClient = DeviceClient.CreateFromConnectionString(ConnectionStringProvider.Value, TransportType.Mqtt);
+            this.deviceClient = DeviceClient.CreateFromConnectionString(ConnectionStringProvider.Value, TransportType.Mqtt);
 #else
-                TpmDevice myDevice = new TpmDevice(0); 
-                string hubUri = myDevice.GetHostName();
-                string deviceId = myDevice.GetDeviceId();
-                string sasToken = myDevice.GetSASToken();
-                this.deviceClient = DeviceClient.Create(hubUri,
-                    AuthenticationMethodFactory.CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Mqtt);
+            TpmDevice myDevice = new TpmDevice(0); 
+            string hubUri = myDevice.GetHostName();
+            string deviceId = myDevice.GetDeviceId();
+            string sasToken = myDevice.GetSASToken();
+            this.deviceClient = DeviceClient.Create(hubUri,
+                AuthenticationMethodFactory.CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Mqtt);
 #endif
-                await this.deviceClient.OpenAsync();
+            await this.deviceClient.OpenAsync();
 
-                await deviceClient.SetMethodHandlerAsync("DisplayLCD", DisplayLCD, null);
-                await deviceClient.SetMethodHandlerAsync("ControlMotor", ControlMotoDriver, null);
+            await deviceClient.SetMethodHandlerAsync("DisplayLCD", DisplayLCD, null);
+            await deviceClient.SetMethodHandlerAsync("ControlMotor", ControlMotoDriver, null);
 
-                Debug.WriteLine("Exited!\n");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Error in sample: {0}", ex.Message);
-            }
+            Debug.WriteLine("Exited!\n");
         }
 
         public Task CloseAsync()
