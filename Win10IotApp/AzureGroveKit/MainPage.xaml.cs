@@ -37,8 +37,23 @@ namespace AzureGroveKit
             ctsForStart = new CancellationTokenSource();
             runbutton.IsEnabled = false;
             iotClient = new IotHubClient(CallMeLogger, null);
-            await iotClient.Start();
-            await sendMessageAsync(3000);
+            try
+            {
+                await iotClient.Start();
+                await sendMessageAsync(3000);
+            }
+            catch (Microsoft.Azure.Devices.Client.Exceptions.UnauthorizedException ex)
+            {
+                ErrorDialog(ex.Message + "\n\nPlease double check the date and time is correct?");
+                ctsForStart.Cancel();
+                runbutton.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                ErrorDialog(ex.Message);
+                ctsForStart.Cancel();
+                runbutton.IsEnabled = true;
+            }
         }
 
         private void clearButton_Click(object sender, RoutedEventArgs e)
@@ -119,5 +134,16 @@ namespace AzureGroveKit
             await iotClient.CloseAsync();
         }
 
+        private async void ErrorDialog(string content)
+        {
+            ContentDialog dialog = new ContentDialog
+            {
+                //Title = "Sorry, an unexpected error occured:",
+                Title = "Sorry...",
+                Content = content + "\n\n\nContact us for help.",
+                CloseButtonText = "Close"
+            };
+            ContentDialogResult result = await dialog.ShowAsync();
+        }
     }
 }
