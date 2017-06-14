@@ -1,4 +1,4 @@
-﻿//#define SIMULATE
+﻿#define SIMULATE
 using Microsoft.Azure.Devices.Client;
 using System;
 using System.Diagnostics;
@@ -29,7 +29,7 @@ namespace AzureGroveKit
             return message;
         }
 
-        public void DisplayLCD(String msg)
+        public void Display(String msg)
         {
             Debug.WriteLine("Display: " + msg);
         }
@@ -83,7 +83,7 @@ namespace AzureGroveKit
         }
 
 
-        public void DisplayLCD(String msg)
+        public void Display(String msg)
         {
             display.init();  
             display.clearDisplay();
