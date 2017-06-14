@@ -145,6 +145,12 @@
       <Version>5.3.3</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="GrovePi, Version=1.0.10.0, Culture=neutral, processorArchitecture=ARM">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\GrovePi.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

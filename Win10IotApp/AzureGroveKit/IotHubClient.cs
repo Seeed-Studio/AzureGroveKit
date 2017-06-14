@@ -1,4 +1,4 @@
-﻿#define SIMULATE
+﻿//#define SIMULATE
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Devices.Tpm;
 using Newtonsoft.Json;
@@ -25,20 +25,29 @@ namespace AzureGroveKit
 
         public async Task Start()
         {
+            try
+            {
 #if SIMULATE
-            this.deviceClient = DeviceClient.CreateFromConnectionString(ConnectionStringProvider.Value, TransportType.Mqtt);
+                this.deviceClient = DeviceClient.CreateFromConnectionString(ConnectionStringProvider.Value, TransportType.Mqtt);
 #else
-            TpmDevice myDevice = new TpmDevice(0); 
-            string hubUri = myDevice.GetHostName();
-            string deviceId = myDevice.GetDeviceId();
-            string sasToken = myDevice.GetSASToken();
-            this.deviceClient = DeviceClient.Create(hubUri,
-                AuthenticationMethodFactory.CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Mqtt);
+                TpmDevice myDevice = new TpmDevice(0); 
+                string hubUri = myDevice.GetHostName();
+                string deviceId = myDevice.GetDeviceId();
+                string sasToken = myDevice.GetSASToken();
+                this.deviceClient = DeviceClient.Create(hubUri,
+                    AuthenticationMethodFactory.CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Mqtt);
 #endif
-            await this.deviceClient.OpenAsync();
+                await this.deviceClient.OpenAsync();
 
-            await deviceClient.SetMethodHandlerAsync("DisplayLCD", Display, null);
-            await deviceClient.SetMethodHandlerAsync("ControlMotor", ControlMotoDriver, null);
+                await deviceClient.SetMethodHandlerAsync("DisplayLCD", DisplayLCD, null);
+                await deviceClient.SetMethodHandlerAsync("ControlMotor", ControlMotoDriver, null);
+
+                Debug.WriteLine("Exited!\n");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error in sample: {0}", ex.Message);
+            }
         }
 
         public Task CloseAsync()
@@ -48,13 +57,7 @@ namespace AzureGroveKit
 
         public async Task SendDeviceToCloudMessagesAsync(Message message)
         {
-            try {
-                await deviceClient.SendEventAsync(message);
-            }
-            catch (Microsoft.Azure.Devices.Client.Exceptions.UnauthorizedException e)
-            {
-                throw e;
-            }
+            await deviceClient.SendEventAsync(message);
         }
 
         public async Task<Message> ReceiveC2dAsync()
@@ -64,11 +67,11 @@ namespace AzureGroveKit
             return receivedMessage;
         }
 
-        private Task<MethodResponse> Display(MethodRequest methodRequest, object userContext)
+        private Task<MethodResponse> DisplayLCD(MethodRequest methodRequest, object userContext)
         {
             Debug.WriteLine("\t{0}", methodRequest.DataAsJson);
             MethodData m = JsonConvert.DeserializeObject<MethodData>(methodRequest.DataAsJson);
-            sensorController.Display(m.text);
+            sensorController.DisplayLCD(m.text);
             this.callMeLogger(methodRequest.DataAsJson);
             return Task.FromResult(new MethodResponse(new byte[0], 200));
         }
