@@ -15,12 +15,32 @@ namespace AzureGroveKit
         Action<object> callMeLogger;
         Action<object> errorHandler;
         SensorController sensorController;
+        private string deviceId;
+        private string hubUri;
+        private string sasToken;
 
         public IotHubClient(Action<object> callMeLogger, Action<object> errorHandler)
         {
             this.callMeLogger = callMeLogger;
             this.errorHandler = errorHandler;
             sensorController = new SensorController();
+#if SIMULATE
+#else
+            initConnectString();
+#endif 
+        }
+
+        private void initConnectString()
+        {
+            TpmDevice myDevice = new TpmDevice(0);
+            hubUri = myDevice.GetHostName();
+            deviceId = myDevice.GetDeviceId();
+            sasToken = myDevice.GetSASToken();
+            
+            if (String.IsNullOrEmpty(hubUri) || String.IsNullOrEmpty(deviceId) || String.IsNullOrEmpty(sasToken))
+            {
+                throw new ArgumentNullException("","Please fill Device ConnectString (From Azure) on TPM.");
+            }
         }
 
         public async Task Start()
@@ -28,10 +48,6 @@ namespace AzureGroveKit
 #if SIMULATE
             this.deviceClient = DeviceClient.CreateFromConnectionString(ConnectionStringProvider.Value, TransportType.Mqtt);
 #else
-            TpmDevice myDevice = new TpmDevice(0); 
-            string hubUri = myDevice.GetHostName();
-            string deviceId = myDevice.GetDeviceId();
-            string sasToken = myDevice.GetSASToken();
             this.deviceClient = DeviceClient.Create(hubUri,
                 AuthenticationMethodFactory.CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Mqtt);
 #endif
@@ -41,6 +57,11 @@ namespace AzureGroveKit
             await deviceClient.SetMethodHandlerAsync("ControlMotor", ControlMotoDriver, null);
 
             Debug.WriteLine("Exited!\n");
+        }
+
+        public string getDeviceId()
+        {
+            return deviceId;
         }
 
         public Task CloseAsync()

@@ -23,6 +23,7 @@ namespace AzureGroveKit
         SensorController sensorController;
         int callMeCounter;
         int sendMessageCounter;
+        string deviceId;
 
         public MainPage()
         {
@@ -36,11 +37,12 @@ namespace AzureGroveKit
         {
             ctsForStart = new CancellationTokenSource();
             runbutton.IsEnabled = false;
-            iotClient = new IotHubClient(CallMeLogger, null);
             try
             {
+                iotClient = new IotHubClient(CallMeLogger, null);
+                deviceId = iotClient.getDeviceId();
                 await iotClient.Start();
-                await sendMessageAsync(3000);
+                await sendMessageAndEventAsync(3); // Send message ervry 3s
             }
             catch (Microsoft.Azure.Devices.Client.Exceptions.UnauthorizedException ex)
             {
@@ -64,24 +66,53 @@ namespace AzureGroveKit
             methodCallList.Items.Clear();
         }
 
-        private async Task sendMessageAsync(int delayTime)
+        private async Task sendMessageAndEventAsync(int delayTime)
         {
+            DateTime lastTime = DateTime.Now;
+            bool lastButtonState = false;
             while (true)
             {
                 if (ctsForStart.IsCancellationRequested)
                 {
                     return;
                 }
-                GroveMessage groveMessage = sensorController.GetSensorValue();
-                var messageSerialized = JsonConvert.SerializeObject(groveMessage);
-                var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
-                await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
-                SendMessageLoger(messageSerialized);
-                await Task.Delay(delayTime);
+
+                DateTime currentTime = DateTime.Now;
+                if ((currentTime-lastTime).TotalSeconds > delayTime)
+                {
+                    GroveMessage groveMessage = sensorController.GetSensorValue();
+                    groveMessage.DeviceId = deviceId;
+                    var messageSerialized = JsonConvert.SerializeObject(groveMessage);
+                    var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
+                    await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
+                    SendMessageLoger(messageSerialized);
+                    lastTime = DateTime.Now;
+                }
+
+                bool buttonState = sensorController.GetButtonValue();
+                if (buttonState != lastButtonState)
+                {
+                    if (buttonState)
+                    {
+                        ButtonEvent buttonEvent = new ButtonEvent();
+                        buttonEvent.Click = true;
+                        buttonEvent.DeviceId = deviceId; 
+                        var messageSerialized = JsonConvert.SerializeObject(buttonEvent);
+                        var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
+                        await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
+                        SendMessageLoger(messageSerialized);
+                    }
+                    else
+                    {
+                        // on to off
+                    }
+                    await Task.Delay(50);
+                }
+                lastButtonState = buttonState;
             }
         }
 
-        private async Task recieiveMessageAsync(String iotHubUri, String iotHubConnectString)
+        private async Task receiveMessageAsync(String iotHubUri, String iotHubConnectString)
         {
             while (true)
             {
@@ -97,12 +128,10 @@ namespace AzureGroveKit
             }
         }
 
-
         private void SendMessageLoger(object element)
         {
             AddItemToListBox(messageSendList, string.Format("[{0}] {1}", sendMessageCounter++, element));
         }
-
 
         private void CallMeLogger(object element)
         {

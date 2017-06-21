@@ -18,15 +18,20 @@ namespace AzureGroveKit
         public GroveMessage GetSensorValue()
         {
             GroveMessage message = new GroveMessage();
-            message.Temp = "25";
-            message.Hum = "69";
-            message.Sound = "23";
-            message.Light = "112";
+            message.Temp = 25.0;
+            message.Hum = 69.0;
+            message.Sound = 123;
+            message.Light = 112;
             message.GasSO = 23;
-            message.PIR = "True";
+            message.PIR = true;
             message.Timestamp = DateTime.Now.ToString();
 
             return message;
+        }
+
+        public bool GetEvent()
+        {
+            return true;
         }
 
         public void DisplayLCD(String msg)
@@ -39,7 +44,6 @@ namespace AzureGroveKit
             Debug.WriteLine("\t turn " + onoff);
         }
 #else
-
         IDHTTemperatureAndHumiditySensor temphumiSensor;
         ISoundSensor soundSensor;
         ILightSensor lightSensor;
@@ -47,6 +51,7 @@ namespace AzureGroveKit
         IPIRMotionSensor pirMotion;
         IOLEDDisplay128X64 display;
         IMiniMotorDriver motor;
+        IButtonSensor button;
 
         public SensorController() {
             temphumiSensor = DeviceFactory.Build.DHTTemperatureAndHumiditySensor(Pin.DigitalPin2, DHTModel.Dht11);
@@ -56,6 +61,7 @@ namespace AzureGroveKit
             pirMotion = DeviceFactory.Build.PIRMotionSensor(Pin.DigitalPin3);
             display = DeviceFactory.Build.OLEDDisplay128X64();
             motor = DeviceFactory.Build.MiniMotorDriver();
+            button = DeviceFactory.Build.ButtonSensor(Pin.DigitalPin4);
         }
 
         public GroveMessage GetSensorValue()
@@ -65,12 +71,12 @@ namespace AzureGroveKit
             try
             {
                 temphumiSensor.Measure();
-                message.Temp = temphumiSensor.TemperatureInCelsius.ToString();
-                message.Hum = temphumiSensor.Humidity.ToString();
-                message.Sound = soundSensor.SensorValue().ToString();
-                message.Light = lightSensor.SensorValue().ToString();
+                message.Temp = temphumiSensor.TemperatureInCelsius;
+                message.Hum = temphumiSensor.Humidity;
+                message.Sound = soundSensor.SensorValue();
+                message.Light = lightSensor.SensorValue();
                 message.GasSO = gasSensor.SensorValue();
-                message.PIR = pirMotion.IsPeopleDetected().ToString();
+                message.PIR = pirMotion.IsPeopleDetected();
                 message.Timestamp = DateTime.Now.ToString();
 
             }
@@ -82,6 +88,12 @@ namespace AzureGroveKit
             return message;
         }
 
+        public bool GetButtonValue()
+        {
+            string buttonon = button.CurrentState.ToString();
+            bool buttonState = buttonon.Equals("On", StringComparison.OrdinalIgnoreCase);
+            return buttonState;
+        }
 
         public void DisplayLCD(String msg)
         {

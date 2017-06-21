@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureGroveKit", "AzureGroveKit\AzureGroveKit.csproj", "{9B10CCD8-79E2-419B-8409-9EFA04E47A67}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEvent", "..\..\Test\TestEvent\TestEvent.csproj", "{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,26 @@ Global
 		{9B10CCD8-79E2-419B-8409-9EFA04E47A67}.Release|x86.ActiveCfg = Release|x86
 		{9B10CCD8-79E2-419B-8409-9EFA04E47A67}.Release|x86.Build.0 = Release|x86
 		{9B10CCD8-79E2-419B-8409-9EFA04E47A67}.Release|x86.Deploy.0 = Release|x86
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Debug|ARM.ActiveCfg = Debug|ARM
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Debug|ARM.Build.0 = Debug|ARM
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Debug|ARM.Deploy.0 = Debug|ARM
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Debug|x64.ActiveCfg = Debug|x64
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Debug|x64.Build.0 = Debug|x64
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Debug|x64.Deploy.0 = Debug|x64
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Debug|x86.ActiveCfg = Debug|x86
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Debug|x86.Build.0 = Debug|x86
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Debug|x86.Deploy.0 = Debug|x86
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Release|Any CPU.ActiveCfg = Release|x86
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Release|ARM.ActiveCfg = Release|ARM
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Release|ARM.Build.0 = Release|ARM
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Release|ARM.Deploy.0 = Release|ARM
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Release|x64.ActiveCfg = Release|x64
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Release|x64.Build.0 = Release|x64
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Release|x64.Deploy.0 = Release|x64
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Release|x86.ActiveCfg = Release|x86
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Release|x86.Build.0 = Release|x86
+		{FE803DDD-7CAA-4931-8B31-AE86AA9779D1}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

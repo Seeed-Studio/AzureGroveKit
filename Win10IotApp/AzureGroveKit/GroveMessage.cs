@@ -2,12 +2,19 @@
 {
     class GroveMessage
     {
-        public string Hum { get; set; }
-        public string Temp { get; set; }
-        public string Sound { get; set; }
-        public string Light { get; set; }
+        public string DeviceId { get; set; }
+        public double Hum { get; set; }
+        public double Temp { get; set; }
+        public int Sound { get; set; }
+        public int Light { get; set; }
         public int GasSO { get; set; }
-        public string PIR { get; set; }
+        public bool PIR { get; set; }
         public string Timestamp { get; set; }
+    }
+
+    class ButtonEvent
+    {
+        public string DeviceId { get; set; }
+        public bool Click { get; set; }
     }
 }
