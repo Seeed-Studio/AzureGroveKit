@@ -13,10 +13,11 @@ namespace TestLib
         {
             GroveMessage m = new GroveMessage()
             {
-                Hum = "45",
-                Temp = "25",
-                Sound = "199",
-                Light = "200",
+                DeviceId = "Device-01",
+                Hum = 45,
+                Temp = 25,
+                Sound =  199,
+                Light = 200,
                 GasSO = 99,
                 PIR = "1",
                 Timestamp = DateTime.Now.ToString()
@@ -28,10 +29,11 @@ namespace TestLib
 
     internal class GroveMessage
     {
-        public string Hum { get; set; }
-        public string Temp { get; set; }
-        public string Sound { get; set; }
-        public string Light { get; set; }
+        public string DeviceId { get; set; }
+        public double Hum { get; set; }
+        public double Temp { get; set; }
+        public int Sound { get; set; }
+        public int Light { get; set; }
         public int GasSO { get; set; }
         public string PIR { get; set; }
         public string Timestamp { get; set; }
