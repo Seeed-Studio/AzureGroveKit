@@ -42,7 +42,8 @@ namespace AzureGroveKit
                 iotClient = new IotHubClient(CallMeLogger, null);
                 deviceId = iotClient.getDeviceId();
                 await iotClient.Start();
-                await sendMessageAndEventAsync(3); // Send message ervry 3s
+                new Task(SendButtonEvent).Start(); ;
+                await sendMessageAsync(3000); // Send message ervry 3s
             }
             catch (Microsoft.Azure.Devices.Client.Exceptions.UnauthorizedException ex)
             {
@@ -58,35 +59,14 @@ namespace AzureGroveKit
             }
         }
 
-        private void clearButton_Click(object sender, RoutedEventArgs e)
+        private void SendButtonEvent()
         {
-            callMeCounter = 0;
-            sendMessageCounter = 0;
-            messageSendList.Items.Clear();
-            methodCallList.Items.Clear();
-        }
-
-        private async Task sendMessageAndEventAsync(int delayTime)
-        {
-            DateTime lastTime = DateTime.Now;
             bool lastButtonState = false;
             while (true)
             {
                 if (ctsForStart.IsCancellationRequested)
                 {
-                    return;
-                }
-
-                DateTime currentTime = DateTime.Now;
-                if ((currentTime-lastTime).TotalSeconds > delayTime)
-                {
-                    GroveMessage groveMessage = sensorController.GetSensorValue();
-                    groveMessage.DeviceId = deviceId;
-                    var messageSerialized = JsonConvert.SerializeObject(groveMessage);
-                    var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
-                    await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
-                    SendMessageLoger(messageSerialized);
-                    lastTime = DateTime.Now;
+                    break;
                 }
 
                 bool buttonState = sensorController.GetButtonValue();
@@ -96,19 +76,47 @@ namespace AzureGroveKit
                     {
                         ButtonEvent buttonEvent = new ButtonEvent();
                         buttonEvent.Click = true;
-                        buttonEvent.DeviceId = deviceId; 
+                        buttonEvent.DeviceId = deviceId;
                         var messageSerialized = JsonConvert.SerializeObject(buttonEvent);
                         var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
-                        await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
+                        iotClient.SendDeviceToCloudMessagesAsync(encodedMessage).Wait();
                         SendMessageLoger(messageSerialized);
                     }
                     else
                     {
                         // on to off
                     }
-                    await Task.Delay(50);
+                    Task.Delay(50).Wait();
                 }
                 lastButtonState = buttonState;
+            }
+        }
+
+        private void clearButton_Click(object sender, RoutedEventArgs e)
+        {
+            callMeCounter = 0;
+            sendMessageCounter = 0;
+            messageSendList.Items.Clear();
+            methodCallList.Items.Clear();
+        }
+
+        private async Task sendMessageAsync(int delayTime)
+        {
+            DateTime lastTime = DateTime.Now;
+            while (true)
+            {
+                if (ctsForStart.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                GroveMessage groveMessage = sensorController.GetSensorValue();
+                groveMessage.DeviceId = deviceId;
+                var messageSerialized = JsonConvert.SerializeObject(groveMessage);
+                var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
+                await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
+                SendMessageLoger(messageSerialized);
+                await Task.Delay(delayTime);
             }
         }
 
