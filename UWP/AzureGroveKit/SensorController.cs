@@ -1,13 +1,13 @@
 ﻿//#define SIMULATE
-using Microsoft.Azure.Devices.Client;
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 #if SIMULATE
 #else
 using GrovePi;
 using GrovePi.I2CDevices;
 using GrovePi.Sensors;
+using System.Threading.Tasks;
+using Microsoft.Azure.Devices.Client;
 #endif
 
 namespace AzureGroveKit
@@ -42,6 +42,11 @@ namespace AzureGroveKit
         public void ControlMotoDriver(Boolean onoff)
         {
             Debug.WriteLine("\t turn " + onoff);
+        }
+
+        internal bool GetButtonValue()
+        {
+            return false;
         }
 #else
         IDHTTemperatureAndHumiditySensor temphumiSensor;

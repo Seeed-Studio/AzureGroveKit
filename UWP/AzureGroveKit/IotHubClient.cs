@@ -25,6 +25,9 @@ namespace AzureGroveKit
             this.errorHandler = errorHandler;
             sensorController = new SensorController();
 #if SIMULATE
+            var builder = IotHubConnectionStringBuilder.Create(ConnectionStringProvider.Value);
+            hubUri = builder.HostName;
+            deviceId = builder.DeviceId;
 #else
             initConnectString();
 #endif 
