@@ -13,7 +13,7 @@ namespace CODetector
             Run(TestData.GetTestDataString(), new TraceWriter());
         }
 
-        const string IOTHUB_CONNECT_STRING = "HostName=GroveKitIotHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=szPdDDGjl5cxPbkJhuqty16K7PiQtDt3ON2Xi7Pfofk=";
+        const string IOTHUB_CONNECT_STRING = "YOUR_IOTHUB_CONNECTSTRING";
         const int DANGER_VALUE = 50;
 
         public static void Run(string myEventHubMessage, TraceWriter log)
@@ -22,11 +22,11 @@ namespace CODetector
             GroveMessage m = JsonConvert.DeserializeObject<GroveMessage>(myEventHubMessage);
             if (m.GasSO < DANGER_VALUE)
             {
-                ControlMotor("Device-01", true).Wait();
+                ControlMotor(m.DeviceId, true).Wait();
             }
             else
             {
-                ControlMotor("Device-01", false).Wait();
+                ControlMotor(m.DeviceId, false).Wait();
             }
         }
 
@@ -48,7 +48,7 @@ namespace CODetector
             public int Sound { get; set; }
             public int Light { get; set; }
             public int GasSO { get; set; }
-            public string PIR { get; set; }
+            public bool PIR { get; set; }
             public string Timestamp { get; set; }
         }
 
