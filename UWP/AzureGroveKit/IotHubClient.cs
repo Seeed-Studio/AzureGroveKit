@@ -56,7 +56,7 @@ namespace AzureGroveKit
 #endif
             await this.deviceClient.OpenAsync();
 
-            await deviceClient.SetMethodHandlerAsync("DisplayLCD", DisplayLCD, null);
+            await deviceClient.SetMethodHandlerAsync("DisplayOLED", DisplayOLED, null);
             await deviceClient.SetMethodHandlerAsync("ControlMotor", ControlMotoDriver, null);
 
             Debug.WriteLine("Exited!\n");
@@ -84,11 +84,11 @@ namespace AzureGroveKit
             return receivedMessage;
         }
 
-        private Task<MethodResponse> DisplayLCD(MethodRequest methodRequest, object userContext)
+        private Task<MethodResponse> DisplayOLED(MethodRequest methodRequest, object userContext)
         {
             Debug.WriteLine("\t{0}", methodRequest.DataAsJson);
             MethodData m = JsonConvert.DeserializeObject<MethodData>(methodRequest.DataAsJson);
-            sensorController.DisplayLCD(m.text);
+            sensorController.DisplayOLED(m.text);
             this.callMeLogger(methodRequest.DataAsJson);
             return Task.FromResult(new MethodResponse(new byte[0], 200));
         }

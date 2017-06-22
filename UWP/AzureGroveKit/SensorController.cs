@@ -100,7 +100,7 @@ namespace AzureGroveKit
             return buttonState;
         }
 
-        public void DisplayLCD(String msg)
+        public void DisplayOLED(String msg)
         {
             display.init();  
             display.clearDisplay();
