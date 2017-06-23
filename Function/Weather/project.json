@@ -1,0 +1,12 @@
+{
+"frameworks": {
+"net46": {
+"dependencies": {
+    "Microsoft.AspNet.WebApi.Client": "5.2.3",
+    "Microsoft.AspNet.WebApi.Core": "5.2.3",
+    "Microsoft.Azure.Devices": "1.2.4",
+    "Newtonsoft.Json": "10.0.2"
+}
+}
+}
+}
