@@ -25,6 +25,18 @@ namespace TestLib
 
             return JsonConvert.SerializeObject(m);
         }
+
+        public static string GetTestButtonEventString()
+        {
+            ButtonEvent m = new ButtonEvent()
+            {
+                DeviceId = "GroveKitDevice",
+                Click = true,
+                Timestamp = DateTime.Now.ToString()
+            };
+
+            return JsonConvert.SerializeObject(m);
+        }
     }
 
     internal class GroveMessage
@@ -36,6 +48,13 @@ namespace TestLib
         public int Light { get; set; }
         public int GasSO { get; set; }
         public bool PIR { get; set; }
+        public string Timestamp { get; set; }
+    }
+
+    internal class ButtonEvent
+    {
+        public string DeviceId { get; set; }
+        public bool Click { get; set; }
         public string Timestamp { get; set; }
     }
 }

@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLib", "TestLib\TestLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather", "Weather\Weather.csproj", "{095C634B-B40E-4BAE-B638-287CF63AE4CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFTTT", "IFTTT\IFTTT.csproj", "{2EB711E3-35CE-48A4-9D83-9845C3A7E363}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ButtonSOS", "ButtonSOS\ButtonSOS.csproj", "{E7E53958-C0B3-4935-BF26-3FEB6345FB5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{095C634B-B40E-4BAE-B638-287CF63AE4CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{095C634B-B40E-4BAE-B638-287CF63AE4CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{095C634B-B40E-4BAE-B638-287CF63AE4CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EB711E3-35CE-48A4-9D83-9845C3A7E363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EB711E3-35CE-48A4-9D83-9845C3A7E363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EB711E3-35CE-48A4-9D83-9845C3A7E363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EB711E3-35CE-48A4-9D83-9845C3A7E363}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7E53958-C0B3-4935-BF26-3FEB6345FB5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7E53958-C0B3-4935-BF26-3FEB6345FB5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7E53958-C0B3-4935-BF26-3FEB6345FB5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7E53958-C0B3-4935-BF26-3FEB6345FB5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
