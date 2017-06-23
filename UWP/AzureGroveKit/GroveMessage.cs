@@ -16,5 +16,6 @@
     {
         public string DeviceId { get; set; }
         public bool Click { get; set; }
+        public string Timestamp { get; set; }
     }
 }

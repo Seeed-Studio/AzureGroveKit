@@ -77,6 +77,7 @@ namespace AzureGroveKit
                         ButtonEvent buttonEvent = new ButtonEvent();
                         buttonEvent.Click = true;
                         buttonEvent.DeviceId = deviceId;
+                        buttonEvent.Timestamp = DateTime.Now.ToString();
                         var messageSerialized = JsonConvert.SerializeObject(buttonEvent);
                         var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
                         iotClient.SendDeviceToCloudMessagesAsync(encodedMessage).Wait();

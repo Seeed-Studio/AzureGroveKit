@@ -58,9 +58,11 @@ namespace AzureGroveKit
 
             await deviceClient.SetMethodHandlerAsync("DisplayOLED", DisplayOLED, null);
             await deviceClient.SetMethodHandlerAsync("ControlMotor", ControlMotoDriver, null);
+            await deviceClient.SetMethodHandlerAsync("ControlRelay", ControlRelay, null);
 
             Debug.WriteLine("Exited!\n");
         }
+
 
         public string getDeviceId()
         {
@@ -90,7 +92,7 @@ namespace AzureGroveKit
             MethodData m = JsonConvert.DeserializeObject<MethodData>(methodRequest.DataAsJson);
             sensorController.DisplayOLED(m.text);
             this.callMeLogger(methodRequest.DataAsJson);
-            return Task.FromResult(new MethodResponse(new byte[0], 200));
+            return Task.FromResult(new MethodResponse(200));
         }
 
         private Task<MethodResponse> ControlMotoDriver(MethodRequest methodRequest, object userContext)
@@ -99,7 +101,15 @@ namespace AzureGroveKit
             MotorMethodData m = JsonConvert.DeserializeObject<MotorMethodData>(methodRequest.DataAsJson);
             sensorController.ControlMotoDriver(m.onoff);
             this.callMeLogger(methodRequest.DataAsJson);
-            //return Task.FromResult(new MethodResponse(new byte[0], 200));
+            return Task.FromResult(new MethodResponse(200));
+        }
+
+        private Task<MethodResponse> ControlRelay(MethodRequest methodRequest, object userContext)
+        {
+            Debug.WriteLine("\t{0}", methodRequest.DataAsJson);
+            MotorMethodData m = JsonConvert.DeserializeObject<MotorMethodData>(methodRequest.DataAsJson);
+            sensorController.ControlRelay(m.onoff);
+            this.callMeLogger(methodRequest.DataAsJson);
             return Task.FromResult(new MethodResponse(200));
         }
     }

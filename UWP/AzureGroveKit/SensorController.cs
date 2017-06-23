@@ -34,19 +34,24 @@ namespace AzureGroveKit
             return true;
         }
 
-        public void DisplayLCD(String msg)
+        public void DisplayOLED(String msg)
         {
             Debug.WriteLine("Display: " + msg);
         }
 
         public void ControlMotoDriver(Boolean onoff)
         {
-            Debug.WriteLine("\t turn " + onoff);
+            Debug.WriteLine("\t Motor turn " + onoff);
         }
 
         internal bool GetButtonValue()
         {
             return false;
+        }
+
+        internal void ControlRelay(bool onoff)
+        {
+            Debug.WriteLine("\t Realy turn " + onoff);
         }
 #else
         IDHTTemperatureAndHumiditySensor temphumiSensor;
@@ -57,16 +62,18 @@ namespace AzureGroveKit
         IOLEDDisplay128X64 display;
         IMiniMotorDriver motor;
         IButtonSensor button;
+        IRelay relay;
 
         public SensorController() {
             temphumiSensor = DeviceFactory.Build.DHTTemperatureAndHumiditySensor(Pin.DigitalPin2, DHTModel.Dht11);
+            pirMotion = DeviceFactory.Build.PIRMotionSensor(Pin.DigitalPin3);
+            button = DeviceFactory.Build.ButtonSensor(Pin.DigitalPin4);
+            relay = DeviceFactory.Build.Relay(Pin.DigitalPin5);
             soundSensor = DeviceFactory.Build.SoundSensor(Pin.AnalogPin0);
             lightSensor = DeviceFactory.Build.LightSensor(Pin.AnalogPin1);
             gasSensor = DeviceFactory.Build.GasSensorMQ2(Pin.AnalogPin2);
-            pirMotion = DeviceFactory.Build.PIRMotionSensor(Pin.DigitalPin3);
             display = DeviceFactory.Build.OLEDDisplay128X64();
             motor = DeviceFactory.Build.MiniMotorDriver();
-            button = DeviceFactory.Build.ButtonSensor(Pin.DigitalPin4);
         }
 
         public GroveMessage GetSensorValue()
@@ -120,6 +127,18 @@ namespace AzureGroveKit
             {
                 motor.drive1(0);
                 motor.drive2(0);
+            }
+        }
+
+        public void ControlRelay(Boolean onoff)
+        {
+            if (onoff)
+            {
+                relay.ChangeState(SensorStatus.On);
+            }
+            else
+            {
+                relay.ChangeState(SensorStatus.Off);
             }
         }
 #endif
