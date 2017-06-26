@@ -21,7 +21,7 @@ The SD Card included kit have installed the NBOOS system. It will guide you to i
 ### Deploy AzureGroveKit UWP App
 The app help to connect Azure iothub, collect Grove sensor value and control Grove output.
 1. Wating Win10 IoT setup, Setting Wi-Fi, Remeber the IP Address
-2. Open browser, login win10 iot core web console "http://192.168.190.178:8080", Account: Administrator, Password: p@ssw0rd
+2. Open browser, login win10 iot core web console "http://ip-address:8080", Account: Administrator, Password: p@ssw0rd
 3. Move on "Apps --> Install app"
 4. "App package" choice "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.appxbundle"
 5. "Certificate" choice "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.cer"
@@ -44,7 +44,7 @@ The app help to connect Azure iothub, collect Grove sensor value and control Gro
   A2   | Grove - Gas Sensor
   I2C1 | Grove - OLED Display 0.96"
   I2C2 | Grove - Mini I2C Motor Driver
-3. Power on and login web console "http://192.168.190.178:8080"
+3. Power on and login web console "http://ip-address:8080"
 4. Move on "App Manager --> Apps", Run "AzureGroveKit"
 5. The app will display on output, Click "Run", Now The App send message to IOTHUB, and can response command.
 6. Check "YOUR IOTHUB --> Overview --> Usage", i will show the message count.
