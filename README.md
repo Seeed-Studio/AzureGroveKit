@@ -10,10 +10,12 @@ The SD Card included kit have installed the NBOOS system. It will guide you to i
 ### Deploy AzureGroveKit UWP App
 The app help to connect Azure iothub, collect Grove sensor value and control Grove output.
 1. Wating Win10 IoT setup, Setting Wi-Fi, Remeber the IP Address
-2. Open browser, login web console "http://192.168.190.178:8080", Account: Administrator, Password: p@ssw0rd
+2. Open browser, login win10 iot core web console "http://192.168.190.178:8080", Account: Administrator, Password: p@ssw0rd
 3. Move on "Apps --> Install app"
-4. Choice uwp release file 
-5. Click "GO" to deploy, waiting a few minutes
+4. "App package" choice "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.appxbundle"
+5. "Certificate" choice "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.cer"
+6. "Dependency" choice all file one bye one on path "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/Dependencies/ARM"
+5. "Deploy" click "GO", waiting a few minutes
 ### Setup Azure IOTHUB Devices Connect String on TPM
 1. Move on "TPM configuration"
 2. Intall "Software TPM Emulator(NoSecurity), wating system restart.
