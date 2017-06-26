@@ -1,7 +1,7 @@
 # Overview
 The full name is "Grove Kit for Win10 Iot Core & Azure Platform". This Kit and Guide book will help quickly familiar win10 Iot and Azure. The hardware party is very to use. We make several classic scenes project.
 ![Data flow](data-flow.png)
-![Physical](physical.png)
+![Physical](physical.jpg)
 
 # GetStarted
 ## Setup your rasaberry
