@@ -7,6 +7,12 @@ The SD Card included kit have installed the NBOOS system. It will guide you to i
 2. Power on 
 3. Connect WI-FI to internet
 4. Choice Win10 IoT, Waiting install success.
+
+### Setup Azure IOTHUB Devices Connect String on TPM
+1. Move on "TPM configuration"
+2. Intall "Software TPM Emulator(NoSecurity), wating system restart.
+3. Copy "Device Id", "Device Primary Key", "Hostname" on "TPM configuration --> Logical devices settings --> Logical device ID: 0 --> Azure IoT Hub Hostname, "Device Primary Key", "Hostname", Then save.
+
 ### Deploy AzureGroveKit UWP App
 The app help to connect Azure iothub, collect Grove sensor value and control Grove output.
 1. Wating Win10 IoT setup, Setting Wi-Fi, Remeber the IP Address
@@ -14,12 +20,9 @@ The app help to connect Azure iothub, collect Grove sensor value and control Gro
 3. Move on "Apps --> Install app"
 4. "App package" choice "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.appxbundle"
 5. "Certificate" choice "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.cer"
-6. "Dependency" choice all file one bye one on path "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/Dependencies/ARM"
+6. "Dependency" choice one "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/Dependencies/ARM", the click "Add dependency" to choice nexe.
 5. "Deploy" click "GO", waiting a few minutes
-### Setup Azure IOTHUB Devices Connect String on TPM
-1. Move on "TPM configuration"
-2. Intall "Software TPM Emulator(NoSecurity), wating system restart.
-3. Copy "Device Id", "Device Primary Key", "Hostname" on "TPM configuration --> Logical devices settings --> Logical device ID: 0 --> Azure IoT Hub Hostname, "Device Primary Key", "Hostname", Then save.
+6. Refresh, you can find AzureGroveKit on Apps row
 
 ### Test AzureGroveKit App
 1. Power off rasaberry, Insert GrovePi module.
