@@ -1,0 +1,6 @@
+SELECT
+    *
+INTO
+    GroveKitPowerBI
+FROM
+    GroveKitIotHub
