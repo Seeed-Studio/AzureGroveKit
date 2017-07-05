@@ -4,11 +4,11 @@ The full name is "Grove Kit for Win10 Iot Core & Azure Platform". This Kit and G
 ![Physical](physical.jpg)
 
 # GetStarted
-## Setup your rasaberry
+## Setup your Raspberry
 ### Install Win10 IoT Core
 The SD Card included kit have installed the NBOOS system. It will guide you to install the latest Win10 IOT system from the Internet.
-1. Put SD Card on Rasaberry
-1. Connect display with your rasaberry, HDMI or lvds output.
+1. Put SD Card on Raspberry
+1. Connect display with your Raspberry, HDMI or lvds output.
 2. Power on 
 3. Connect WI-FI to internet
 4. Choice Win10 IoT, Waiting install success.
@@ -30,7 +30,7 @@ The app help to connect Azure iothub, collect Grove sensor value and control Gro
 6. Refresh, you can find AzureGroveKit on Apps row
 
 ### Test AzureGroveKit App
-1. Power off rasaberry, Insert GrovePi module.
+1. Power off raspberry, Insert GrovePi module.
 2. Insert necessary Grove on GrovePi, Connect map below:
 
   Grove| GrovePi Port
