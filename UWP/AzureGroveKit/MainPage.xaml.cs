@@ -66,6 +66,7 @@ namespace AzureGroveKit
                 {
                     break;
                 }
+                Task.Delay(1).Wait();
 
                 if (sensorController.lockState) continue;
                 sensorController.lockState = true;
