@@ -6,26 +6,33 @@ The full name is "Grove Kit for Win10 Iot Core & Azure Platform". This Kit and G
 # GetStarted
 ## Setup your Raspberry
 ### Install Win10 IoT Core
-The SD Card included kit have installed the NBOOS system. It will guide you to install the latest Win10 IOT system from the Internet.
-1. Put SD Card on Raspberry
-1. Connect display with your Raspberry, HDMI or lvds output.
-2. Power on 
-3. Connect WI-FI to internet
-4. Choice Win10 IoT, Waiting install success.
+1. Download IOT Core Dashboard from https://developer.microsoft.com/en-us/windows/iot/Downloads
+2. Open the Windows 10 IoT Core Dashboard you downloaded and installed from the Get the tools page.
+3. Click "Set up a new device".
+4. Select Raspberry Pi 3 from the dropdown.
+5. Enter device name, password and Wi-Fi network to connect to.
+6. Download and install Windows 10 IoT Core on your SD card.
+7. A window will pop up to show you the progress. This step can take several minutes depending on the speed of your SD card.
+8. Put SD Card into Raspberry
+9. Connect display with your Raspberry, HDMI or lvds output.
+10. Power on 
+11. Connect WI-FI to internet
+12. Remember the ip address from AP
 
 ### Setup Azure IOTHUB Devices Connect String on TPM
+1. Open browser, login win10 iot core web console "http://ip-address:8080", Account: Administrator, Password: (You enter on IOT Core Dashboard)
 1. Move on "TPM configuration"
 2. Intall "Software TPM Emulator(NoSecurity), wating system restart.
-3. Copy "Device Id", "Device Primary Key", "Hostname" on "TPM configuration --> Logical devices settings --> Logical device ID: 0 --> Azure IoT Hub Hostname, "Device Primary Key", "Hostname", Then save.
+3. Copy "Connection string—primary key"(Refer to [Create Azure IOTHUB](https://github.com/Seeed-Studio/AzureGroveKit#create-azure-iothub)) on "TPM configuration --> Logical devices settings --> Logical device ID: 0 --> Azure Connection String", Then save.
 
 ### Deploy AzureGroveKit UWP App
 The app help to connect Azure iothub, collect Grove sensor value and control Grove output.
-1. Wating Win10 IoT setup, Setting Wi-Fi, Remeber the IP Address
-2. Open browser, login win10 iot core web console "http://ip-address:8080", Account: Administrator, Password: p@ssw0rd
+1. Wating Win10 IoT setup, Setting Wi-Fi, Remember the IP Address
+2. Open browser, login win10 iot core web console "http://ip-address:8080"
 3. Move on "Apps --> Install app"
-4. "App package" choice "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.appxbundle"
-5. "Certificate" choice "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.cer"
-6. "Dependency" choice one "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/Dependencies/ARM", the click "Add dependency" to choice nexe.
+4. "App package" choice "UWP/Release/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.appxbundle"
+5. "Certificate" choice "UWP/Release/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.cer"
+6. "Dependency" choice one "UWP/Release/AzureGroveKit_[version]_Debug_Test/Dependencies/ARM", the click "Add dependency" to choice nexe.
 5. "Deploy" click "GO", waiting a few minutes
 6. Refresh, you can find AzureGroveKit on Apps row
 
@@ -54,5 +61,4 @@ The app help to connect Azure iothub, collect Grove sensor value and control Gro
 1. Login "https://portal.azure.com/", if you havn't account, first signup.
 2. Create "New --> Internet of Things --> IoT hub", detail refer to https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal
 3. create a device, move on "All resources --> YOUR_IOTHUB --> Device Explorer --> Add Device", save
-4. click the device, copy "Device Id", "Device Primary Key"
-5. move on "YOUR_IOTHUB --> Overview", copy "Hostname"
+4. click the device, copy "Connection string—primary key"
