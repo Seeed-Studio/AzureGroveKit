@@ -6,22 +6,25 @@ The full name is "Grove Kit for Win10 Iot Core & Azure Platform". This Kit and G
 # GetStarted
 ## Setup your Raspberry
 ### Install Win10 IoT Core
+1. Download IOT Core Dashboard from https://developer.microsoft.com/en-us/windows/iot/Downloads
+2. Refer to https://developer.microsoft.com/en-us/windows/iot/GetStarted, choice Raspberry pi3, Install onto my blank MicroSD card, Windows 10 Iot Core, install image to SD card which you can get from Kit.
 The SD Card included kit have installed the NBOOS system. It will guide you to install the latest Win10 IOT system from the Internet.
-1. Put SD Card on Raspberry
-1. Connect display with your Raspberry, HDMI or lvds output.
-2. Power on 
-3. Connect WI-FI to internet
-4. Choice Win10 IoT, Waiting install success.
+3. Put SD Card on Raspberry
+4. Connect display with your Raspberry, HDMI or lvds output.
+5. Power on 
+6. Connect WI-FI to internet
+7. Remember the ip address from AP
 
 ### Setup Azure IOTHUB Devices Connect String on TPM
+1. Open browser, login win10 iot core web console "http://ip-address:8080", Account: Administrator, Password: (From IOT Core Dashboard)
 1. Move on "TPM configuration"
 2. Intall "Software TPM Emulator(NoSecurity), wating system restart.
-3. Copy "Device Id", "Device Primary Key", "Hostname" on "TPM configuration --> Logical devices settings --> Logical device ID: 0 --> Azure IoT Hub Hostname, "Device Primary Key", "Hostname", Then save.
+3. Copy IotHub Connection String(Refer to [Create Azure IOTHUB](https://github.com/Seeed-Studio/AzureGroveKit#create-azure-iothub)) on "TPM configuration --> Logical devices settings --> Logical device ID: 0 --> Azure Connection String", Then save.
 
 ### Deploy AzureGroveKit UWP App
 The app help to connect Azure iothub, collect Grove sensor value and control Grove output.
 1. Wating Win10 IoT setup, Setting Wi-Fi, Remeber the IP Address
-2. Open browser, login win10 iot core web console "http://ip-address:8080", Account: Administrator, Password: p@ssw0rd
+2. Open browser, login win10 iot core web console "http://ip-address:8080"
 3. Move on "Apps --> Install app"
 4. "App package" choice "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.appxbundle"
 5. "Certificate" choice "UWP/AzureGroveKit/AppPackages/AzureGroveKit_[version]_Debug_Test/AzureGroveKit_[version]_arm_Debug.cer"
