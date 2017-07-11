@@ -9,8 +9,6 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace AzureGroveKit
 {
     /// <summary>
@@ -38,12 +36,12 @@ namespace AzureGroveKit
             ctsForStart = new CancellationTokenSource();
             runbutton.IsEnabled = false;
             try
-            {
+            {  
                 iotClient = new IotHubClient(CallMeLogger, null);
                 deviceId = iotClient.getDeviceId();
                 await iotClient.Start();
-                new Task(SendButtonEvent).Start(); ;
-                await sendMessageAsync(3000); // Send message ervry 3s
+                new Task(sendMessage).Start();
+                new Task(SendButtonEvent).Start();
             }
             catch (Microsoft.Azure.Devices.Client.Exceptions.UnauthorizedException ex)
             {
@@ -69,7 +67,11 @@ namespace AzureGroveKit
                     break;
                 }
 
+                if (sensorController.lockState) continue;
+                sensorController.lockState = true;
                 bool buttonState = sensorController.GetButtonValue();
+                sensorController.lockState = false;
+
                 if (buttonState != lastButtonState)
                 {
                     if (buttonState)
@@ -101,23 +103,25 @@ namespace AzureGroveKit
             methodCallList.Items.Clear();
         }
 
-        private async Task sendMessageAsync(int delayTime)
+        private void sendMessage()
         {
-            DateTime lastTime = DateTime.Now;
             while (true)
             {
                 if (ctsForStart.IsCancellationRequested)
                 {
                     return;
                 }
-
+                if (sensorController.lockState) continue;
+                sensorController.lockState = true;
                 GroveMessage groveMessage = sensorController.GetSensorValue();
+                sensorController.lockState = false;
+
                 groveMessage.DeviceId = deviceId;
                 var messageSerialized = JsonConvert.SerializeObject(groveMessage);
                 var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
-                await iotClient.SendDeviceToCloudMessagesAsync(encodedMessage);
+                iotClient.SendDeviceToCloudMessagesAsync(encodedMessage).Wait();
                 SendMessageLoger(messageSerialized);
-                await Task.Delay(delayTime);
+                Task.Delay(3000).Wait();
             }
         }
 

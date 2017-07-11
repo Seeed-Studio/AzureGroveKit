@@ -63,6 +63,7 @@ namespace AzureGroveKit
         IMiniMotorDriver motor;
         IButtonSensor button;
         IRelay relay;
+        public Boolean lockState;
 
         public SensorController() {
             temphumiSensor = DeviceFactory.Build.DHTTemperatureAndHumiditySensor(Pin.DigitalPin2, DHTModel.Dht11);
@@ -74,6 +75,7 @@ namespace AzureGroveKit
             gasSensor = DeviceFactory.Build.GasSensorMQ2(Pin.AnalogPin2);
             display = DeviceFactory.Build.OLEDDisplay128X64();
             motor = DeviceFactory.Build.MiniMotorDriver();
+            lockState = false;
         }
 
         public GroveMessage GetSensorValue()
