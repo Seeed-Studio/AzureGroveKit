@@ -56,6 +56,7 @@ The app help to connect Azure iothub, collect Grove sensor value and control Gro
 5. The app will display on output, Click "Run", Now The App send message to IOTHUB, and can response command.
 6. Check "YOUR IOTHUB --> Overview --> Usage", i will show the message count.
 7. If you use windows, use [DeviceExplorer](https://github.com/Azure/azure-iot-sdk-csharp/tree/master/tools/DeviceExplorer) see more info.
+8. More UWP overview, refer to https://github.com/Seeed-Studio/AzureGroveKit/tree/master/UWP
 
 ## Create Azure IOTHUB 
 1. Login "https://portal.azure.com/", if you havn't account, first signup.
