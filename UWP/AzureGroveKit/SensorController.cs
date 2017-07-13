@@ -15,15 +15,19 @@ namespace AzureGroveKit
     class SensorController
     {
 #if SIMULATE
+        public Boolean lockState;
+
         public GroveMessage GetSensorValue()
         {
+            BooleanGenerator boolGen = new BooleanGenerator();
+            Random rnd = new Random();
             GroveMessage message = new GroveMessage();
-            message.Temp = 25.0;
-            message.Hum = 69.0;
-            message.Sound = 123;
-            message.Light = 112;
-            message.GasSO = 23;
-            message.PIR = true;
+            message.Temp = rnd.Next(10, 30);
+            message.Hum = rnd.Next(40, 100);
+            message.Sound = rnd.Next(100, 200);
+            message.Light = rnd.Next(100, 200);
+            message.GasSO = rnd.Next(10, 100);
+            message.PIR = boolGen.NextBoolean();
             message.Timestamp = DateTime.Now.ToString();
 
             return message;
@@ -52,6 +56,21 @@ namespace AzureGroveKit
         internal void ControlRelay(bool onoff)
         {
             Debug.WriteLine("\t Realy turn " + onoff);
+        }
+
+        public class BooleanGenerator
+        {
+            Random rnd;
+
+            public BooleanGenerator()
+            {
+                rnd = new Random();
+            }
+
+            public bool NextBoolean()
+            {
+                return Convert.ToBoolean(rnd.Next(0, 2));
+            }
         }
 #else
         IDHTTemperatureAndHumiditySensor temphumiSensor;
