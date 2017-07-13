@@ -1,0 +1,10 @@
+SELECT
+    System.Timestamp AS OutputTime,
+    DeviceId AS DeviceId,
+    COUNT(*) AS CountPIR
+INTO
+   output
+FROM
+    InputStream TIMESTAMP BY Timestamp
+WHERE PIR=1
+GROUP BY TumblingWindow(hour,1),DeviceId
