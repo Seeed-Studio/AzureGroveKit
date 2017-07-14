@@ -15,14 +15,14 @@ The full name is "Grove Kit for Win10 Iot Core & Azure Platform". This Kit and G
 7. A window will pop up to show you the progress. This step can take several minutes depending on the speed of your SD card.
 8. Put SD Card into Raspberry
 9. Connect display with your Raspberry, HDMI or lvds output.
-10. Power on 
+10. Power on
 11. Connect WI-FI to internet
 12. Remember the ip address from AP
 
 ### Setup Azure IOTHUB Devices Connect String on TPM
 1. Open browser, login win10 iot core web console "http://ip-address:8080", Account: Administrator, Password: (You enter on IOT Core Dashboard)
 1. Move on "TPM configuration"
-2. Intall "Software TPM Emulator(NoSecurity), wating system restart.
+2. Intall "Software TPM Emulator(NoSecurity)", wating system restart.
 3. Copy "Connection string—primary key"(Refer to [Create Azure IOTHUB](https://github.com/Seeed-Studio/AzureGroveKit#create-azure-iothub)) on "TPM configuration --> Logical devices settings --> Logical device ID: 0 --> Azure Connection String", Then save.
 
 ### Deploy AzureGroveKit UWP App
@@ -58,7 +58,7 @@ The app help to connect Azure iothub, collect Grove sensor value and control Gro
 7. If you use windows, use [DeviceExplorer](https://github.com/Azure/azure-iot-sdk-csharp/tree/master/tools/DeviceExplorer) see more info.
 8. More UWP overview, refer to https://github.com/Seeed-Studio/AzureGroveKit/tree/master/UWP
 
-## Create Azure IOTHUB 
+## Create Azure IOTHUB
 1. Login "https://portal.azure.com/", if you havn't account, first signup.
 2. Create "New --> Internet of Things --> IoT hub", detail refer to https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal
 3. create a device, move on "All resources --> YOUR_IOTHUB --> Device Explorer --> Add Device", save
