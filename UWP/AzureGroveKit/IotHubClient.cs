@@ -88,27 +88,51 @@ namespace AzureGroveKit
 
         private Task<MethodResponse> DisplayOLED(MethodRequest methodRequest, object userContext)
         {
-            Debug.WriteLine("\t{0}", methodRequest.DataAsJson);
-            MethodData m = JsonConvert.DeserializeObject<MethodData>(methodRequest.DataAsJson);
-            sensorController.DisplayOLED(m.text);
+            Debug.WriteLine(String.Format("method DisplayOLED: {0}", methodRequest.DataAsJson));
+            try
+            {
+                MethodData m = JsonConvert.DeserializeObject<MethodData>(methodRequest.DataAsJson);
+                sensorController.DisplayOLED(m.text);
+            }
+            catch (Exception e)
+            {
+                this.callMeLogger(String.Format("Wrong message: {0}", methodRequest.DataAsJson));
+                return Task.FromResult(new MethodResponse(400));
+            }
             this.callMeLogger(methodRequest.DataAsJson);
             return Task.FromResult(new MethodResponse(200));
         }
 
         private Task<MethodResponse> ControlMotoDriver(MethodRequest methodRequest, object userContext)
         {
-            Debug.WriteLine("\t{0}", methodRequest.DataAsJson);
-            MotorMethodData m = JsonConvert.DeserializeObject<MotorMethodData>(methodRequest.DataAsJson);
-            sensorController.ControlMotoDriver(m.onoff);
+            Debug.WriteLine(String.Format("method ControlMotoDriver: {0}", methodRequest.DataAsJson));
+            try
+            {
+                MotorMethodData m = JsonConvert.DeserializeObject<MotorMethodData>(methodRequest.DataAsJson);
+                sensorController.ControlMotoDriver(m.onoff);
+            }
+            catch (Exception e)
+            {
+                this.callMeLogger(String.Format("Wrong message: {0}", methodRequest.DataAsJson));
+                return Task.FromResult(new MethodResponse(400));
+            }
             this.callMeLogger(methodRequest.DataAsJson);
             return Task.FromResult(new MethodResponse(200));
         }
 
         private Task<MethodResponse> ControlRelay(MethodRequest methodRequest, object userContext)
         {
-            Debug.WriteLine("\t{0}", methodRequest.DataAsJson);
-            MotorMethodData m = JsonConvert.DeserializeObject<MotorMethodData>(methodRequest.DataAsJson);
-            sensorController.ControlRelay(m.onoff);
+            Debug.WriteLine(String.Format("method ControlRelay: {0}", methodRequest.DataAsJson));
+            try
+            {
+                MotorMethodData m = JsonConvert.DeserializeObject<MotorMethodData>(methodRequest.DataAsJson);
+                sensorController.ControlRelay(m.onoff);
+            }
+            catch (Exception e)
+            {
+                this.callMeLogger(String.Format("Wrong message: {0}", methodRequest.DataAsJson));
+                return Task.FromResult(new MethodResponse(400));
+            }
             this.callMeLogger(methodRequest.DataAsJson);
             return Task.FromResult(new MethodResponse(200));
         }

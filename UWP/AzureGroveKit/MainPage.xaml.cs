@@ -23,6 +23,8 @@ namespace AzureGroveKit
         int sendMessageCounter;
         string deviceId;
 
+        private static int sendMessageDelay = 3000; //milliseconds
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -57,6 +59,13 @@ namespace AzureGroveKit
             }
         }
 
+        private async void stopButton_Click(object sender, RoutedEventArgs e)
+        {
+            ctsForStart.Cancel();
+            runbutton.IsEnabled = true;
+            await iotClient.CloseAsync();
+        }
+
         private void SendButtonEvent()
         {
             bool lastButtonState = false;
@@ -70,7 +79,14 @@ namespace AzureGroveKit
 
                 if (sensorController.lockState) continue;
                 sensorController.lockState = true;
-                bool buttonState = sensorController.GetButtonValue();
+                bool buttonState = false;
+                try {
+                    buttonState = sensorController.GetButtonValue();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
                 sensorController.lockState = false;
 
                 if (buttonState != lastButtonState)
@@ -83,7 +99,14 @@ namespace AzureGroveKit
                         buttonEvent.Timestamp = DateTime.Now.ToString();
                         var messageSerialized = JsonConvert.SerializeObject(buttonEvent);
                         var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
-                        iotClient.SendDeviceToCloudMessagesAsync(encodedMessage).Wait();
+                        try
+                        {
+                            iotClient.SendDeviceToCloudMessagesAsync(encodedMessage).Wait();
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.WriteLine(e.Message);
+                        }
                         SendMessageLoger(messageSerialized);
                     }
                     else
@@ -94,14 +117,6 @@ namespace AzureGroveKit
                 }
                 lastButtonState = buttonState;
             }
-        }
-
-        private void clearButton_Click(object sender, RoutedEventArgs e)
-        {
-            callMeCounter = 0;
-            sendMessageCounter = 0;
-            messageSendList.Items.Clear();
-            methodCallList.Items.Clear();
         }
 
         private void sendMessage()
@@ -120,9 +135,16 @@ namespace AzureGroveKit
                 groveMessage.DeviceId = deviceId;
                 var messageSerialized = JsonConvert.SerializeObject(groveMessage);
                 var encodedMessage = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageSerialized));
-                iotClient.SendDeviceToCloudMessagesAsync(encodedMessage).Wait();
+                try
+                {
+                    iotClient.SendDeviceToCloudMessagesAsync(encodedMessage).Wait();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                }
                 SendMessageLoger(messageSerialized);
-                Task.Delay(3000).Wait();
+                Task.Delay(sendMessageDelay).Wait();
             }
         }
 
@@ -170,11 +192,12 @@ namespace AzureGroveKit
                 });
         }
 
-        private async void stopButton_Click(object sender, RoutedEventArgs e)
+        private void clearButton_Click(object sender, RoutedEventArgs e)
         {
-            ctsForStart.Cancel();
-            runbutton.IsEnabled = true;
-            await iotClient.CloseAsync();
+            callMeCounter = 0;
+            sendMessageCounter = 0;
+            messageSendList.Items.Clear();
+            methodCallList.Items.Clear();
         }
 
         private async void ErrorDialog(string content)
