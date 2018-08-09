@@ -1,6 +1,10 @@
 
 # Overview
-The UWP app is running on Win10 IoT Core. It can periodically get sensor data and send to Azure IoTHub. Second it can respond events immediately to IoTHub. Third it can receive the command from IoTHub and control actuator.
+The UWP App is running on Win10 IoT Core. It can periodically get sensor data and send to Azure IoTHub. Second it can respond events immediately to IoTHub. Third it can receive the command from IoTHub and control actuator.
+
+The version of the Virsual Studio this project used is 2017.
+
+The version of  Windows 10 SDK selected in Virsual Studio is 10.0.15063. The latest Windows 10 SDK version  that the App is tested to be able to run on is 10.0.17134.1.
 
 ## Basic reference library
 - Microsoft.Azure.Devices.Client   
@@ -68,9 +72,9 @@ POST {iot hub}/twins/{device id}/methods
           "onoff": true,
       }
     }
- ```
+```
 ## How to deploy to Raspberry Pi 3
-refer to: https://developer.microsoft.com/en-us/windows/iot/docs/appdeployment
+Please refer to: https://developer.microsoft.com/en-us/windows/iot/docs/appdeployment
 
 ## How to simulate test on local machine
 This will save you a lot of time when testing Azure functionality.
@@ -80,8 +84,8 @@ This will save you a lot of time when testing Azure functionality.
 3. Choice Debug, x86, Local Machine
 4. Run
 
-## Change period of send sensor message
-MainPage.xaml.cs
+## Change the interval of sending messages
+MainPage.xaml.cs line 26:
 ```
-await sendMessageAsync(3000); // Send message ervry 3s
+private static int sendMessageDelay = 3000;
 ```
