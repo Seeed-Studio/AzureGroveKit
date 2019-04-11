@@ -20,7 +20,8 @@ The version of Windows 10 IoT Core this guide used is 10.0.17134.1.
 10. Power on the Raspberry Pi.
 11. If you configured the WiFi SSID and password in step 5, you should see the IP address at the screen now. If you don't, please connect the Pi to a wired ethernet, or find an USB keyboard and mouse to configure the WiFi in the GUI of Windows 10 IoT Core.
 12. Set down the IP adress.
-
+>Notice:
+If there is no device found in my device in Dashboard, please make PC and raspberry Pi in the same IP segment.
 ### Setup Azure IoT Hub Devices Connect String for TPM
 
 We assume that you've already setup an IoT Hub and created a device (Refer to [Setup Azure IoT Hub](#setup-azure-iot-hub)).
@@ -32,11 +33,14 @@ We assume that you've already setup an IoT Hub and created a device (Refer to [S
 5. Copy the "Connection string—primary key" of your created device in Azure IoT Hub
 6. Paste into "TPM configuration --> Logical devices settings --> Logical device ID: 0 --> Azure Connection String", save.
 
+
 ### Deploy AzureGroveKit UWP App
 The UWP App will connect to Azure IoT Hub, collect Grove sensor data and control Grove output.
 1. Open the browser of your PC, login Windows 10 IoT Core web console "http://ip-address:8080"
 2. Navigate "Apps --> Apps manager", if you've installed the AzureGroveKit App before, please uninstall it first (Mac Safari is proved to be not showing the App list properly, Chrome is recommended).
 3. Click "Add", select "Install app package from network or web location", input https://raw.githubusercontent.com/Seeed-Studio/AzureGroveKit/master/UWP/Release/AzureGroveKit_1.0.8.0_Test/Dependencies/ARM/Microsoft.NET.CoreRuntime.1.1.appx. Click "Next", and wait the installation done.
+>Notice:
+Due to the version update, cancel "Add", download the files linked above, and then select local installation.
 4. Click "Add", select "Install app package from network or web location", input https://raw.githubusercontent.com/Seeed-Studio/AzureGroveKit/master/UWP/Release/AzureGroveKit_1.0.8.0_Test/AzureGroveKit_1.0.8.0_arm.appxbundle. Click "Next", and wait the installation done.
 5. Wait a few seconds or refresh, you will find AzureGroveKit in the App list.
 
@@ -58,10 +62,13 @@ The UWP App will connect to Azure IoT Hub, collect Grove sensor data and control
 3. Power on the Raspberry Pi and login Windows 10 IoT Core web console "http://ip-address:8080"
 4. Move on "Apps --> Apps manager", start "AzureGroveKit" via its "Actions" dropdown.
 5. The App will display on the screen, find an USB mouse, click "Run", now the App starts to send messages to Azure IoT Hub, and can response to the downlink commands.
+>Notice: 
+If you have an unauthorized connection or something like that, you can use `Dashboard- >connect to Azure`, choose your iot-hub, choose your device, choose raspberry pi, and provision. Reinstall and run the UWP.
 6. Check "YOUR IOTHUB --> Overview --> Usage", it will show the message count.
 7. If you're using Windows, you can [use DeviceExplorer](#setup-deviceexplorer) to monitor the uploaded messages.
 8. More UWP overview, please refer to https://github.com/Seeed-Studio/AzureGroveKit/tree/master/UWP
-
+>Notice:
+If UWP is not available, try using VS 2017 to open and run the project : [https://github.com/Seeed-Studio/AzureGroveKit/tree/master/UWP](https://github.com/Seeed-Studio/AzureGroveKit/tree/master/UWP)
 ## Setup Azure IoT Hub
 1. Prepare your Azure account and login "https://portal.azure.com/".
 2. Create "New --> Internet of Things --> IoT hub", for instructions please refer to https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal
