@@ -1,7 +1,7 @@
-#Scenario 5: Human detector
-##What problem does Scenario 5 solve?
+# Scenario 5: Human detector
+## What problem does Scenario 5 solve?
 In this scenario, we will use `Grove - PIR Motion Sensor` to monitor human motion event. In this case, the PIR sensor sends human motion events to Microsoft Azure IoT Hub, within half an hour PIR triggers more than three times, recording this and then send a statistical report to PowerBI.
-##Hardware setup
+## Hardware setup
 Connecting `Grove - PIR Motion Sensor` sensor to GrovePi's D3 port, and then power the Raspberry Pi with USB.
 hardware list:
 >1. Raspberry Pi 3
@@ -9,7 +9,7 @@ hardware list:
 >3. Grove - PIR Motion Sensor
 >4. One Grove Cable
 
-##Reference
+## Reference
 * PowerBI go from data to insights in minutes. Any data, any way, anywhere. And all in one view.Here we use PowerBI visualize real-time sensor data from Azure IoT Hub and display PIR count per hour.
 
 >1. If you have created a output on SA, The datasets of your workspace should exist.

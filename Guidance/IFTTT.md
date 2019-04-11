@@ -1,9 +1,9 @@
-#Scenario 2: Sound&Light and relay
-##What problem does Scenario 2 solve?
+# Scenario 2: Sound&Light and relay
+## What problem does Scenario 2 solve?
 In this scenario, we will use three Grove modules to build a sound&light monitor which will trigger relay module when it detect the sound is too loud.
 
 In this case, we using the Azure Function, when the sound is too loud it will trigger the Function, which control the relay to do something. In addition we also use the IFTTT Maker channel, post a trigger request to IFTTT then you can connect it to other IFTTT channel, such as Facebook, Twitter and etc.
-##Hardware setup
+## Hardware setup
 Connecting `Grove - Sound Sensor` to GrovePi+'s A0 port, `Grove - Light Sensor` to GrovePi+'s A1 port and Grove - Relay to D5. And then power the Raspberry Pi with USB.
 hardware list:
 >1. Raspberry Pi 3
@@ -12,14 +12,14 @@ hardware list:
 >4. 3 x Grove Cable
 
 ![sound-light-azure](https://raw.githubusercontent.com/Jenkinlu001/Seeed_Picture/master/sound-light-azure.png)
-##Services
-###Azure sevices
+## Services
+### Azure sevices
 * Micrsoft Azure IoT Hub: Use to manage and monitor Grove module.
 * Micrsoft Azure Functions: We can use Azure Fuction to post request for IFTTT webhook service, and trigger Grove - Relay module.
-###Other services
+### Other services
 * IFTTT Maker Channel: It's a webhook services, you need to sign up account and generate an unique URL by yourself
-##Up and run
-###set up
+## Up and run
+### set up
 Creating IFTTT Maker Channel webhook
 
 Go to [https://ifttt.com/services/maker_webhooks/settings](https://ifttt.com/services/maker_webhooks/settings) and then you will see this:
@@ -38,7 +38,7 @@ Click `Connect` Button, then get the link
 ![sound-light-relay-function-succeeded](https://raw.githubusercontent.com/Jenkinlu001/Seeed_Picture/master/sound-light-relay-function-succeeded.png)
 3. Test function(please copy code section to function)
 ![sound-light-ifttt](https://raw.githubusercontent.com/Jenkinlu001/Seeed_Picture/master/sound-light-ifttt.png)
-###code
+### code
 ```
 using Microsoft.Azure.Devices;
 using Newtonsoft.Json;
@@ -107,5 +107,5 @@ private class GroveMessage
 }
 
 ```
-##Outcome
+## Outcome
 Nothing.
