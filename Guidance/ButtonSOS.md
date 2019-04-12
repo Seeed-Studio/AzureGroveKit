@@ -20,7 +20,7 @@ hardware list:
 1. create function app on `All resources --> New --> Compute --> Function App` Refer to: [https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-azure-function](https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-azure-function)
 ![create-temp-humidity-trigger-function](https://raw.githubusercontent.com/Jenkinlu001/Seeed_Picture/master/create-temp-humidity-function-app.png)
 2. Copy IoTHub campatible EventHub endpoint name. Move on `Your_IoTHub --> GroveKitIotHub --> Endpoints --> Built-in endpoints`, Click `messages/events`, copy value of `Event Hub-compatible name`. And add another Consumer groups, named `function`.
-3. Copy `code/run.csx` to Azrue portal, and modify `IOTHUB_CONNECT_STRING` on the `run.csx`. On the right side to add file named `project.json`, copy `code/project.json`.
+3. Copy `code/run.csx` to Azrue portal, and modify `Account SID` , `YOUR_TWILIO_NUMBER` and `YOUR_FAMILY_NUMBER` on the `run.csx`. On the right side to add file named `project.json`, copy `code/project.json`.
 
 4. Now, You can run AzureGroveKit UWP app to test function.
 ### code/run.csx
